@@ -7,7 +7,7 @@ void main() {
 
 class AppWrapper extends StatelessWidget {
 
-  final String _appName = 'MC ServerLink';
+  final String _appName = 'ServerLink MC';
 
   @override
   Widget build(BuildContext context) {

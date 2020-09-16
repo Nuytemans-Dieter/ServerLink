@@ -23,16 +23,21 @@ class ServerTile extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              // Server image
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: EdgeInsets.only(right: 8.0),
                 child: Container(
                   height: imageSize,
                   width: imageSize,
                   child: Image.network(
                     'https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
+
+              // Server info: name and MOTD
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,6 +53,8 @@ class ServerTile extends StatelessWidget{
                 ],
               ),
               Spacer(),
+              
+              // Number of players count 'online players/max players' and according icon
               Text(
                 _serverInfo.currentPlayers.toString() + ' / ' + _serverInfo.maxPlayers.toString(),
                 style: TextStyle(

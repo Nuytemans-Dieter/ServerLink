@@ -24,6 +24,9 @@ class _ServersScreenState extends State<ServersScreen>{
   
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+
     return FutureBuilder<List<ServerInfo>>(
       future: getCurrentServers(),
       builder: (context, snapshot) {
@@ -43,7 +46,7 @@ class _ServersScreenState extends State<ServersScreen>{
                 if (index != snapshot.data.length-1)
                   Padding(
                     // padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 10),
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width/4, right: 5.0),
+                    padding: EdgeInsets.only(left: width/6 + width/15, right: 5.0),
                     child: Container(
                       height: 1.0,
                       width: double.infinity,

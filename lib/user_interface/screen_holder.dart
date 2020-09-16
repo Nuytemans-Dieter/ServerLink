@@ -47,7 +47,7 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ServerLink',
+          'ServerLink MC',
           style: TextStyle(
             color: widget.tabTextColor,
           ),
