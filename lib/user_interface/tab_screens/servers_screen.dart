@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:server_link_client/data_containers/server_info.dart';
+import 'package:server_link_client/user_interface/widgets/animated/load_server_tile.dart';
 import 'package:server_link_client/user_interface/widgets/server_tile.dart';
 
 class ServersScreen extends StatefulWidget{
@@ -31,7 +32,7 @@ class _ServersScreenState extends State<ServersScreen>{
       future: getCurrentServers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none || snapshot.hasData == null || snapshot.data == null)
-          return Container();
+          return LoadServerTile();
 
         if (snapshot.data.length == 0)
           return Text('No servers found!');
