@@ -5,6 +5,9 @@ import 'package:server_link_client/user_interface/tab_screens/profile_screen.dar
 import 'package:server_link_client/user_interface/tab_screens/servers_screen.dart';
 
 class ScreenHolder extends StatefulWidget {
+  
+  final Color tabTextColor = Colors.white;
+  
   @override
   State<StatefulWidget> createState() {
     return _ScreenHolderState();
@@ -34,25 +37,34 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
 
     _tabController = TabController(
       length: screens.length,
-      initialIndex: 1,
+      initialIndex: 0,
       vsync: this,
     );
-
-    // _tabController.addListener(() {
-      
-    // });
   }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ServerLink'),
+        title: Text(
+          'ServerLink',
+          style: TextStyle(
+            color: widget.tabTextColor,
+          ),
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: <Widget> [
             for (TabScreenWrapper wrapper in screens)
-              Tab(text: wrapper.tabName)
+              Tab(
+                child: Text(
+                  wrapper.tabName,
+                  style: TextStyle(
+                    color: widget.tabTextColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
           ]
         ),
       ),
@@ -62,6 +74,13 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
           for (TabScreenWrapper wrapper in screens)
             wrapper.child,
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: widget.tabTextColor,
+        ),
+        onPressed: () {print('Add server');},
       ),
     );
   }
