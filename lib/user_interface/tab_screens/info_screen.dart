@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:server_link_client/user_interface/popup/info_popup.dart';
 import 'package:server_link_client/user_interface/widgets/info_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -61,7 +62,10 @@ class _InfoScreenState extends State<InfoScreen>{
             else 
               showDialog(
                 context: context,
-                child: Text('An error occured'),
+                child: InfoPopup(
+                  title: 'Woops!',
+                  text: 'We encountered a problem while redirecting you to our GitHub page:\n$url\n\n Please contact us on the email below if this problem persists.\n magnetar.apps@gmail.com',
+                ),
               );
           },
         ),
