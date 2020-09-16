@@ -44,6 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 'Profile settings',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 16.0
                 ),
               ),
             ),
