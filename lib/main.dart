@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:server_link_client/user_interface/screen_holder.dart';
 
 void main() {
   runApp(AppWrapper());
@@ -16,6 +17,7 @@ class AppWrapper extends StatelessWidget {
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: ScreenHolder(),
     );
   }
 }
