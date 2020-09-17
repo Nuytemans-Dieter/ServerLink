@@ -64,20 +64,25 @@ class _AddServerPopupState extends State<AddServerPopup> {
                     keyboardType: TextInputType.number,
                     controller: _ipFieldController,
                     maxLength: 15,
+                    onTap: () {
+                      _ipFieldController.selection = TextSelection.fromPosition(TextPosition(offset: _ipFieldController.text.length));
+                    },
+                    enableInteractiveSelection: false,
                     onChanged: (String value) async {
                       
+                      // This await is required to be able to add a character to the controller
+                      await new Future.delayed(const Duration(milliseconds: 1));
+
                       // Detect back button usage
                       if (value.length < _ip.length)
                       {
                         String lastIpChar = _ip.substring( _ip.length-1 );
-                        if (lastIpChar == '.')
+                        if (lastIpChar == '.' && _ip.length > 1)
                         {
-                          await new Future.delayed(const Duration(milliseconds: 1));
                           _ipFieldController.text = _ip.substring(0, _ip.length-2);
 
                           // Move the cursor to the right
                           _ipFieldController.selection = TextSelection.fromPosition(TextPosition(offset: _ipFieldController.text.length));
-                          setState(() {});
                         }
 
                         _ip = _ipFieldController.text;
@@ -86,11 +91,43 @@ class _AddServerPopupState extends State<AddServerPopup> {
 
                       String numbersOnly = value.replaceAll('.', '');
                       String addedChar = _ipFieldController.text.substring( _ipFieldController.text.length-1 );
+                      int numDots = '.'.allMatches(_ipFieldController.text).length;
 
-                      if (numbersOnly.length % 3 == 0) {
-                        
-                        // This await is required to be able to add a character to the controller
-                        await new Future.delayed(const Duration(milliseconds: 1));
+                      // Only allow . and numbers as input
+                      if (addedChar != '.' && double.tryParse( addedChar ) == null)
+                      {
+                        _ipFieldController.text = _ip;
+                        _ipFieldController.selection = TextSelection.fromPosition(TextPosition(offset: _ipFieldController.text.length));
+                        return;
+                      }
+
+                      // Handle user-dot setting
+                      if (addedChar == '.')
+                      {
+                        List<String> parts = _ipFieldController.text.split('.');
+                        String totalIp = '';
+                        for (String part in parts)
+                        {
+                          if (part != '')
+                          {
+                            for (int i = part.length; i < 3; i++) {
+                              totalIp += 0.toString();
+                            }
+                            totalIp += part + '.';
+                          }
+                        }
+
+                        if (numDots > 3)
+                        {
+                          totalIp = _ipFieldController.text.substring(0, _ip.length);
+                        }
+
+                        _ipFieldController.text = totalIp;
+                        _ipFieldController.selection = TextSelection.fromPosition(TextPosition(offset: _ipFieldController.text.length));
+                      }
+
+                      // Handle automatic dot setting
+                      if (numbersOnly.length % 3 == 0 && numDots < 3) {
 
                         // Add a dot 
                         if (addedChar != '.')
@@ -98,7 +135,6 @@ class _AddServerPopupState extends State<AddServerPopup> {
                         
                         // Move the cursor to the right
                         _ipFieldController.selection = TextSelection.fromPosition(TextPosition(offset: _ipFieldController.text.length));
-                        setState(() {});
                       }
                       
                       // Keep the ip variable up to date
