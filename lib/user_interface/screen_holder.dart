@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:server_link_client/networking/server_list.dart';
 import 'package:server_link_client/user_interface/popup/add_server_popup.dart';
 import 'package:server_link_client/user_interface/tab_screen_wrapper.dart';
 import 'package:server_link_client/user_interface/tab_screens/info_screen.dart';
@@ -18,6 +19,7 @@ class ScreenHolder extends StatefulWidget {
 class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderStateMixin{
   
   List< TabScreenWrapper > screens;
+  ServerList _serverList;
   TabController _tabController;
 
   @override
@@ -25,9 +27,11 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
   {
     super.initState();
 
+    _serverList = ServerList();
+
     screens = new List< TabScreenWrapper >();
     screens.add(
-      new TabScreenWrapper('Servers', ServersScreen())
+      new TabScreenWrapper('Servers', ServersScreen(_serverList))
     );
     screens.add(
       new TabScreenWrapper('Profile', ProfileScreen()),
@@ -85,7 +89,9 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
           context: context, 
           child: AddServerPopup(
             onSubmit: (ip, port) {
-              print('Selected server: $ip:$port');
+              setState(() {
+                _serverList.addServer(ip, port);
+              });
             },
           ),
         ),
