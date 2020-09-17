@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:server_link_client/user_interface/popup/add_server_popup.dart';
 import 'package:server_link_client/user_interface/tab_screen_wrapper.dart';
 import 'package:server_link_client/user_interface/tab_screens/info_screen.dart';
 import 'package:server_link_client/user_interface/tab_screens/profile_screen.dart';
@@ -80,7 +81,7 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
           Icons.add,
           color: widget.tabTextColor,
         ),
-        onPressed: () {print('Add server');},
+        onPressed: () => showDialog(context: context, child: AddServerPopup()),
       ),
     );
   }
