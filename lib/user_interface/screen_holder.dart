@@ -81,7 +81,14 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
           Icons.add,
           color: widget.tabTextColor,
         ),
-        onPressed: () => showDialog(context: context, child: AddServerPopup()),
+        onPressed: () => showDialog(
+          context: context, 
+          child: AddServerPopup(
+            onSubmit: (ip, port) {
+              print('Selected server: $ip:$port');
+            },
+          ),
+        ),
       ),
     );
   }

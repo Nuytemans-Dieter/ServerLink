@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class AddServerPopup extends StatefulWidget{
   
+  final Function(String ip, String port) onSubmit;
+
+  AddServerPopup({this.onSubmit});
+
   @override
   State<StatefulWidget> createState() {
     return _AddServerPopupState();
@@ -156,15 +160,34 @@ class _AddServerPopupState extends State<AddServerPopup> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       maxLength: 5,
+                      onChanged: (String value) => _port = value,
                     ),
                   ),
 
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: FlatButton(
-                      onPressed: () => Navigator.pop(context), 
-                      child: Text('Add server'),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FlatButton(
+                        onPressed: () => Navigator.pop(context), 
+                        child: Text(
+                          'Cancel',
+                        ),
+                      ),
+
+                      FlatButton(
+                        onPressed: () {
+                          if (widget.onSubmit != null)
+                            widget.onSubmit(_ip, _port);
+                          Navigator.pop(context);
+                        }, 
+                        child: Text(
+                          'Add server',
+                          style: TextStyle(
+                            color: Colors.cyan,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
