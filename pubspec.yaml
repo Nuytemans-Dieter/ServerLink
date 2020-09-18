@@ -26,6 +26,7 @@ dependencies:
   package_info: ^0.4.3  # Extracts info about the application for in-app usage
   url_launcher: ^5.6.0  # Used to open links in the browser
   shimmer: ^1.1.1       # Animates the server loading process
+  bubble: ^1.1.9+1      # Used to display speech bubbles
 
 
   # The following adds the Cupertino Icons font to your application.

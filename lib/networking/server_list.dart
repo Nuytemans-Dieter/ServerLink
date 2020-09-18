@@ -6,6 +6,16 @@ class ServerList {
   List<ServerInfo> _servers = List<ServerInfo>();
   List<State> listeners = List<State>();
 
+  ServerList()
+  {
+    _servers = [
+      ServerInfo('Name', 'motd', 10, 50),
+      ServerInfo('This is my server!', 'Server message of the day', 3, 12),
+      ServerInfo('Name', 'motd', 10, 50),
+      ServerInfo('Name', 'motd', 10, 50),
+    ];
+  }
+
   /// Add a listener page that will refresh upon receiving a new value
   void addListener(State state)
   {
@@ -32,6 +42,8 @@ class ServerList {
     );
     for (State state in listeners)
       state.setState(() {});
+
+    return _servers;
   }
 
   /// Get the current server list after updating each entry

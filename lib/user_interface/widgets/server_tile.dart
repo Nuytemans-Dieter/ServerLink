@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:server_link_client/data_containers/server_info.dart';
+import 'package:server_link_client/user_interface/screens/chat_screen.dart';
 
 class ServerTile extends StatelessWidget{
   
@@ -15,7 +16,7 @@ class ServerTile extends StatelessWidget{
     return Container(
       width: double.infinity,
       child: InkWell(
-        onTap: () {},
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(_serverInfo))),
         onLongPress: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
