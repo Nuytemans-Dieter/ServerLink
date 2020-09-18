@@ -80,22 +80,6 @@ class _ScreenHolderState extends State<ScreenHolder> with SingleTickerProviderSt
             wrapper.child,
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: widget.tabTextColor,
-        ),
-        onPressed: () => showDialog(
-          context: context, 
-          child: AddServerPopup(
-            onSubmit: (ip, port) {
-              setState(() {
-                _serverList.addServer(ip, port);
-              });
-            },
-          ),
-        ),
-      ),
     );
   }
 }

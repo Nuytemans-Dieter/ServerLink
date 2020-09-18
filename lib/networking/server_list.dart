@@ -4,7 +4,6 @@ import 'package:server_link_client/data_containers/server_info.dart';
 class ServerList {
 
   List<ServerInfo> _servers = List<ServerInfo>();
-  List<State> listeners = List<State>();
 
   ServerList()
   {
@@ -14,12 +13,6 @@ class ServerList {
       ServerInfo('Name', 'motd', 10, 50),
       ServerInfo('Name', 'motd', 10, 50),
     ];
-  }
-
-  /// Add a listener page that will refresh upon receiving a new value
-  void addListener(State state)
-  {
-    listeners.add(state);
   }
 
   /// Remove the server at the given index
@@ -40,8 +33,6 @@ class ServerList {
         53
       ),
     );
-    for (State state in listeners)
-      state.setState(() {});
 
     return _servers;
   }
