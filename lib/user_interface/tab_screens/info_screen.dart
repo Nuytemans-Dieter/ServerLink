@@ -27,7 +27,7 @@ class _InfoScreenState extends State<InfoScreen>{
   void getVersion() async {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
-        _fullVersion = packageInfo.appName + ' ' + packageInfo.version + '+' + packageInfo.buildNumber;
+        _fullVersion = packageInfo.version + '+' + packageInfo.buildNumber;
       });
     });
   }
@@ -52,7 +52,8 @@ class _InfoScreenState extends State<InfoScreen>{
           ),
         ),
         
-        InfoTile('App version', 'You are using $_fullVersion', displayLine: true,),
+        if (_fullVersion != null)
+          InfoTile('App version', 'You are using ServerLink MC $_fullVersion', displayLine: true,),
         InfoTile('Creator', 'This app was created for free by a passionate, aspiring software engineer.', displayLine: true,),
         InfoTile('GitHub', 'Press here to view this open source project on GitHub', displayLine: true, 
           onTap: () async {
