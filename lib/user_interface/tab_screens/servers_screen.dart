@@ -67,7 +67,7 @@ class _ServersScreenState extends State<ServersScreen>{
                           // padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 10),
                           padding: EdgeInsets.only(left: width/6 + width/15, right: 5.0),
                           child: Container(
-                            height: 1.0,
+                            height: 0.2,
                             width: double.infinity,
                             color: Colors.black,
                           ),

@@ -30,7 +30,6 @@ class _ChatScreenState extends State<ChatScreen>{
 
     if(widget.messages.length == 0)
     {
-      for (int i = 0; i < 15; i++)
       widget.messages.addAll([
         ChatMessage('Jefke', 'Dit is echt een coole server'),
         ChatMessage('Jon Bovi', 'Ja maar mijn naam klopt niet'),

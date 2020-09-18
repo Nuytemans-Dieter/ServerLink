@@ -52,7 +52,7 @@ class InfoTile extends StatelessWidget{
               if (displayLine)
                 Container(
                   width: double.infinity,
-                  height: 1.0,
+                  height: 0.2,
                   color: Colors.black,
                 ),
             ],
