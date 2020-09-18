@@ -74,6 +74,38 @@ class _ServersScreenState extends State<ServersScreen>{
               return Column(
                 children: [
                   Dismissible(
+                    background: Container(
+                      color: Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.delete_forever,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    secondaryBackground: Container(
+                      color: Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.delete_forever,
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     key: ValueKey(index),
                     confirmDismiss: (direction) {
                       return showDialog(context: context, child:
