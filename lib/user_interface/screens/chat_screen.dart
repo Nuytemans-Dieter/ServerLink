@@ -21,12 +21,16 @@ class ChatScreen extends StatefulWidget{
 class _ChatScreenState extends State<ChatScreen>{
 
   Socket socket;
+  TextEditingController _chatFieldController;
+  Set<String> sentMessages;
 
   @override
   void initState()
   {
     super.initState();
 
+    sentMessages = Set<String>();
+    _chatFieldController = new TextEditingController();
     initChatListener();
   }
 
@@ -43,21 +47,25 @@ class _ChatScreenState extends State<ChatScreen>{
 
       print(parts);
 
-      if (parts.length > 2 && parts[0] == 'sub_chat')
+      if (parts.length > 3 && parts[0] == 'sub_chat')
       {
 
-        String sender = parts[1];
+        String sender = parts[1].replaceAll('+', ' ');
         bool isMobile = parts[2] == 'mobile';
+        bool isSentBySelf = parts[3] == 'ID';
 
         // Strip everything except the message itself
-        parts.removeRange(0, 3);
+        parts.removeRange(0, 4);
+
+        String message = parts.join(' ').replaceAll('\n', '');
 
         setState(() {
           widget.messages.add(
             ChatMessage(
-              sender,
-              parts.join(' '),
+              isSentBySelf ? 'you' : sender,
+              message,
               isMobile: isMobile,
+              sentBySelf: isSentBySelf,
             ),
           );
         });
@@ -78,18 +86,18 @@ class _ChatScreenState extends State<ChatScreen>{
     super.dispose();
   }
 
+  void handleSendMessage()
+  {
+    String text = _chatFieldController.text;
+    socket.writeln('ID send_chat my_name $text');
+
+    sentMessages.add(text);
+    _chatFieldController.clear();
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    if(widget.messages.length == 0)
-    {
-      widget.messages.addAll([
-        ChatMessage('Jefke', 'Dit is echt een coole server'),
-        ChatMessage('Jon Bovi', 'Ja maar mijn naam klopt niet'),
-        ChatMessage('Tronald Dump', 'Hahahaa jij loser met je foute naam'),
-        ChatMessage('You', 'Ik haat deze plek', sentBySelf: true),
-      ]);
-    }
 
     return Scaffold(
 
@@ -176,9 +184,11 @@ class _ChatScreenState extends State<ChatScreen>{
           Container(
             width: MediaQuery.of(context).size.width - 70.0,
             child: TextFormField(
+              onEditingComplete: () => handleSendMessage(),
               autocorrect: true,
               autofocus: false,
               maxLines: 1,
+              controller: _chatFieldController,
               decoration: InputDecoration(
                 labelText: 'Type your message here',
                 labelStyle: TextStyle(
@@ -209,10 +219,7 @@ class _ChatScreenState extends State<ChatScreen>{
                   Icons.send,
                   color: Colors.white,
                 ), 
-                onPressed: ()
-                {
-                  // TODO send message
-                }
+                onPressed: () => handleSendMessage(),
               ),
             ),
           ),
