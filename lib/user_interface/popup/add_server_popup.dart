@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:server_link_client/user_interface/popup/info_popup.dart';
 
 class AddServerPopup extends StatefulWidget{
   
-  final Function(String ip, String port) onSubmit;
+  final Function(String ip, int port) onSubmit;
 
   AddServerPopup({this.onSubmit});
 
@@ -176,8 +177,13 @@ class _AddServerPopupState extends State<AddServerPopup> {
 
                       FlatButton(
                         onPressed: () {
+                          
+                          if (int.parse(_port) != null)
+                            showDialog(context: context, child: InfoPopup(title: 'Woops!', text: 'Please make sure the port number is actually a number.',));
+
                           if (widget.onSubmit != null)
-                            widget.onSubmit(_ip, _port);
+                            widget.onSubmit(_ip, int.parse( _port ) );
+
                           Navigator.pop(context);
                         }, 
                         child: Text(

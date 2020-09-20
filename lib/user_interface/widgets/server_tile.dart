@@ -17,7 +17,7 @@ class ServerTile extends StatelessWidget{
       width: double.infinity,
       child: InkWell(
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(_serverInfo))),
-        onLongPress: () {},
+        // onLongPress: () {},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Row(
@@ -43,13 +43,13 @@ class ServerTile extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _serverInfo.serverName,
+                    _serverInfo.serverName ?? 'No server name found',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    _serverInfo.motd
+                    _serverInfo.motd ?? 'No motd found'
                   ),
                 ],
               ),
@@ -57,7 +57,7 @@ class ServerTile extends StatelessWidget{
               
               // Number of players count 'online players/max players' and according icon
               Text(
-                _serverInfo.currentPlayers.toString() + ' / ' + _serverInfo.maxPlayers.toString(),
+                (_serverInfo.currentPlayers.toString() ?? '?') + ' / ' + (_serverInfo.maxPlayers.toString() ?? '?'),
                 style: TextStyle(
                   fontSize: 14.0,
                 ),

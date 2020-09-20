@@ -19,22 +19,12 @@ class ServersScreen extends StatefulWidget{
 }
 
 class _ServersScreenState extends State<ServersScreen>{
-  
-  Future<List<ServerInfo>> getCurrentServers() async
-  {
-    await new Future.delayed(const Duration(milliseconds: 250));
-    return [
-      ServerInfo('Name', 'motd', 10, 50),
-      ServerInfo('This is my server!', 'Server message of the day', 3, 12),
-      ServerInfo('Name', 'motd', 10, 50),
-      ServerInfo('Name', 'motd', 10, 50),
-    ];
-  }
 
   @override
   void initState() {
     super.initState();
 
+    widget.serverList.addServer('10.0.2.2', 4444);
   }
   
   @override
@@ -126,7 +116,6 @@ class _ServersScreenState extends State<ServersScreen>{
                         ServerTile( server ),
                         if (index != snapshot.data.length-1)
                           Padding(
-                            // padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 10),
                             padding: EdgeInsets.only(left: width/6 + width/15, right: 5.0),
                             child: Container(
                               height: 0.2,
