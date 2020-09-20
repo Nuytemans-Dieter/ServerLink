@@ -4,9 +4,9 @@ class ServerInfo {
 
   String serverName;
   String motd;
-  int maxPlayers;
+  int maxPlayers = 0;
 
-  int _currentPlayers;
+  int _currentPlayers = 0;
 
   final String ip;
   final int port;
@@ -23,10 +23,11 @@ class ServerInfo {
   // ServerInfo.fromString(String response);
 
   Future<void> updateServerInfo() async {
-    print('Trying to connect');
     Socket.connect(ip, port).then((socket) async {
       print('Connected to: '
         '${socket.remoteAddress.address}:${socket.remotePort}');
+
+      Set<String> handledRequests = Set<String>();
 
       //Establish the onData, and onDone callbacks
       socket.listen((data) {
@@ -38,9 +39,8 @@ class ServerInfo {
         {
 
           String request = parts[0];
+          print(parts);
           parts.removeAt(0);
-
-          print(request + ' ' + parts[0]);
 
           switch( request )
           {
@@ -58,6 +58,7 @@ class ServerInfo {
 
             case 'get_max_players':
               maxPlayers = int.tryParse( parts[0] ) ?? 1;
+              break;
 
           }
         }
@@ -73,20 +74,20 @@ class ServerInfo {
       
       // Make sure this connection can handle multiple requests
       socket.writeln('ID keep_alive');
-      await Future.delayed(const Duration(milliseconds: 1));
+      await Future.delayed(const Duration(milliseconds: 10));
 
       socket.writeln('ID get_name');
-      await Future.delayed(const Duration(milliseconds: 1));
+      await Future.delayed(const Duration(milliseconds: 10));
       socket.writeln('ID get_motd');
-      await Future.delayed(const Duration(milliseconds: 1));
+      await Future.delayed(const Duration(milliseconds: 10));
       socket.writeln('ID get_num_players');
-      await Future.delayed(const Duration(milliseconds: 1));
+      await Future.delayed(const Duration(milliseconds: 10));
       socket.writeln('ID get_max_players');
-      await Future.delayed(const Duration(milliseconds: 1));
+
+      await Future.delayed(const Duration(milliseconds: 500));
       socket.writeln('ID close');
     });
 
-    print('Done getting info');
   }
 
 }

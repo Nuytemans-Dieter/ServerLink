@@ -57,7 +57,7 @@ class ServerTile extends StatelessWidget{
               
               // Number of players count 'online players/max players' and according icon
               Text(
-                (_serverInfo.currentPlayers.toString() ?? '?') + ' / ' + (_serverInfo.maxPlayers.toString() ?? '?'),
+                _serverInfo.currentPlayers.toString() + ' / ' + _serverInfo.maxPlayers.toString(),
                 style: TextStyle(
                   fontSize: 14.0,
                 ),

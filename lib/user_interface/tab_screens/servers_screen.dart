@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:server_link_client/data_containers/server_info.dart';
 import 'package:server_link_client/networking/server_list.dart';
@@ -23,6 +25,10 @@ class _ServersScreenState extends State<ServersScreen>{
   @override
   void initState() {
     super.initState();
+
+    Timer.periodic(Duration(milliseconds: 500), (Timer timer) {
+      setState(() {});
+    });
 
     widget.serverList.addServer('10.0.2.2', 4444);
   }
