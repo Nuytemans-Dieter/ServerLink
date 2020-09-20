@@ -22,15 +22,25 @@ class ServersScreen extends StatefulWidget{
 
 class _ServersScreenState extends State<ServersScreen>{
 
+  Timer timer;
+
   @override
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(milliseconds: 500), (Timer timer) {
+    timer = Timer.periodic(Duration(milliseconds: 500), (Timer timer) {
       setState(() {});
     });
 
     widget.serverList.addServer('10.0.2.2', 4444);
+  }
+
+  @override
+  void dispose()
+  {
+    super.dispose();
+
+    timer.cancel();
   }
   
   @override

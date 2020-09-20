@@ -24,10 +24,8 @@ class ServerInfo {
 
   Future<void> updateServerInfo() async {
     Socket.connect(ip, port).then((socket) async {
-      print('Connected to: '
-        '${socket.remoteAddress.address}:${socket.remotePort}');
 
-      Set<String> handledRequests = Set<String>();
+      print('Connected to: ${socket.remoteAddress.address}:${socket.remotePort}');
 
       //Establish the onData, and onDone callbacks
       socket.listen((data) {
@@ -39,7 +37,6 @@ class ServerInfo {
         {
 
           String request = parts[0];
-          print(parts);
           parts.removeAt(0);
 
           switch( request )

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:server_link_client/data_containers/chat_message.dart';
@@ -18,11 +20,62 @@ class ChatScreen extends StatefulWidget{
 
 class _ChatScreenState extends State<ChatScreen>{
 
-  // TODO add listener for chat messages
+  Socket socket;
+
   @override
   void initState()
   {
     super.initState();
+
+    initChatListener();
+  }
+
+  void initChatListener() async
+  {
+    socket = await Socket.connect(widget.serverInfo.ip, widget.serverInfo.port);
+
+    socket.listen((event) {
+      String input = String.fromCharCodes( event );
+      List<String> parts = input.split(' ');
+
+      // Event look:
+      // sub_chat <sender name> <ingame/mobile> <message>
+
+      print(parts);
+
+      if (parts.length > 2 && parts[0] == 'sub_chat')
+      {
+
+        String sender = parts[1];
+        bool isMobile = parts[2] == 'mobile';
+
+        // Strip everything except the message itself
+        parts.removeRange(0, 3);
+
+        setState(() {
+          widget.messages.add(
+            ChatMessage(
+              sender,
+              parts.join(' '),
+              isMobile: isMobile,
+            ),
+          );
+        });
+      }
+      }).onDone(() {
+        socket.destroy();
+      });
+
+      socket.writeln('ID keep_alive');
+      await Future.delayed(Duration(milliseconds: 10));
+      socket.writeln('ID sub_chat join');
+    }
+
+  @override
+  void dispose()
+  {
+    socket.close();
+    super.dispose();
   }
 
   @override
