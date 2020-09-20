@@ -43,9 +43,7 @@ class _ChatScreenState extends State<ChatScreen>{
       List<String> parts = input.split(' ');
 
       // Event look:
-      // sub_chat <sender name> <ingame/mobile> <message>
-
-      print(parts);
+      // sub_chat <sender name> <ingame/mobile> <sender UUID> <message>
 
       if (parts.length > 3 && parts[0] == 'sub_chat')
       {
@@ -82,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen>{
   @override
   void dispose()
   {
-    socket.close();
+    socket.destroy();
     super.dispose();
   }
 
